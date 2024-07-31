@@ -1,13 +1,19 @@
 import './App.css'
-import Header from "./Components/Header.tsx";
-import Contacts from "./Components/Contacts.tsx";
+import Header from "@/components/Header.tsx";
+import {Toaster} from "@/components/ui/sonner"
+import {Provider} from 'react-redux'
+import {store} from "@/redux/store.ts";
+import ContactsPage from "@/views/ContactsPage.tsx";
 
 function App() {
+
     return (
-        <>
-            <Header />
-            <Contacts />
-        </>
+        <Provider store={store}>
+            <Header/>
+            <ContactsPage/>
+            <Toaster/>
+        </Provider>
+
     )
 }
 

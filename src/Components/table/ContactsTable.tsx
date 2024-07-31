@@ -12,7 +12,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "../ui/table.tsx"
+} from "@/components/ui/table.tsx"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -58,10 +58,11 @@ function ContactsTable<TData, TValue>({
                                 data-state={row.getIsSelected() && "selected"}
                             >
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>
+                                    <TableCell key={cell.id} className="relative">
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </TableCell>
-                                ))}
+                                )
+                                )}
                             </TableRow>
                         ))
                     ) : (
