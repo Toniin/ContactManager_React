@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {deleteContact, getContacts} from "@/redux/actions/contact.action.ts";
-import {Contact} from "@/Models/contact.model.ts";
+import {Contact} from "@/models/contact.model.ts";
 
 const initialState: Contact[] = []
 

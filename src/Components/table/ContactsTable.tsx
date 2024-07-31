@@ -12,7 +12,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "../ui/table.tsx"
+} from "@/components/ui/table.tsx"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]

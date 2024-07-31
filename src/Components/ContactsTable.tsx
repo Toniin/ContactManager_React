@@ -1,10 +1,10 @@
-import DataTable from "./Table/ContactsTable.tsx"
-import {columns} from "./Table/ColumnsTable.tsx";
+import DataTable from "@/components/table/ContactsTable.tsx"
+import {columns} from "@/components/table/ColumnsTable.tsx";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from '@/redux/hooks.ts'
 import {getContacts} from "@/redux/actions/contact.action.ts";
 
-function Contacts() {
+function ContactsTable() {
     const contacts = useAppSelector(state => state.contacts)
     const dispatch = useAppDispatch()
 
@@ -21,4 +21,4 @@ function Contacts() {
     );
 }
 
-export default Contacts;
+export default ContactsTable;
