@@ -13,6 +13,7 @@ export const addContact = createAsyncThunk('addContact', async (newContact: Cont
     const response = await fetch(`${import.meta.env.VITE_API_URL}/add`, optionsPostRequest)
     return response.json()
 })
+
 export const getContacts = createAsyncThunk('getContacts', async () => {
     const optionsGetRequest = {
         method: "GET",
@@ -33,4 +34,17 @@ export const deleteContact = createAsyncThunk('deleteContact', async (phoneNumbe
     }
     const response = await fetch(`${import.meta.env.VITE_API_URL}/delete/${phoneNumber}`, optionsDeleteRequest)
     return response.text()
+})
+
+export const renameContact = createAsyncThunk('addContact', async (renamedContact: Contact) => {
+    const optionsPutRequest = {
+        method: 'PUT',
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(renamedContact)
+    };
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/update/${renamedContact.phoneNumber}`, optionsPutRequest)
+    return response.json()
 })

@@ -4,67 +4,59 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@/redux/hooks.ts";
-import {addContact} from "@/redux/actions/contact.action.ts";
-import {toast} from "sonner";
+import {renameContact} from "@/redux/actions/contact.action.ts";
 import {LuLoader2} from "react-icons/lu";
+import {toast} from "sonner";
+import {isNotEditing} from "@/redux/isEditingReducer.ts";
 
 const formSchema = z.object({
     name: z.string().min(1, {message: "Please enter name"}),
-    phoneNumber: z.coerce.number().min(1, {message: "Please enter phone number"}),
 })
 
-function AddContactForm() {
-    const navigate = useNavigate();
+function RenameContactForm({contact}: { contact: { name: string, phoneNumber: number } }) {
     const dispatch = useAppDispatch()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            phoneNumber: 0,
+            name: contact.name,
         },
     })
 
-    function onSubmit(newContact: z.infer<typeof formSchema>) {
-        dispatch(addContact(newContact))
+    function onSubmit(formData: z.infer<typeof formSchema>) {
+        const renamedContact = {
+            name: formData.name,
+            phoneNumber: contact.phoneNumber,
+        }
 
-        toast.success("Contact added successfully", {
-            description: `Contact with phone ${newContact.phoneNumber} is added`,
-            action: {
-                label: "X",
-                onClick: () => null,
-            },
-        })
+        if (formData.name !== contact.name) {
+            toast.success("Contact renamed successfully", {
+                description: `Contact with phone ${contact.phoneNumber} is renamed`,
+                action: {
+                    label: "X",
+                    onClick: () => null,
+                },
+            })
 
-        navigate("/contacts")
+            dispatch(renameContact(renamedContact))
+            dispatch(isNotEditing())
+        }
+
+        dispatch(isNotEditing())
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-3">
                 <FormField
                     control={form.control}
                     name="name"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Name</FormLabel>
+                            <FormLabel hidden={true}>Name</FormLabel>
                             <FormControl>
                                 <Input placeholder="John Doe" {...field} autoFocus={true}/>
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="phoneNumber"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Phone number</FormLabel>
-                            <FormControl>
-                                <Input type="number" placeholder="1234567890" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -74,11 +66,11 @@ function AddContactForm() {
                     {form.formState.isSubmitting &&
                         <LuLoader2 className="animate-spin h-5 w-5 mr-3"/>
                     }
-                    Add contact
+                    Save
                 </Button>
             </form>
         </Form>
     )
 }
 
-export default AddContactForm;
+export default RenameContactForm;

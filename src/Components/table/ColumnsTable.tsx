@@ -2,6 +2,7 @@ import {ColumnDef} from "@tanstack/react-table"
 import {Contact} from "@/models/contact.model.ts";
 import ButtonDeleteContact from "@/components/ButtonDeleteContact.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
+import ButtonUpdateContact from "@/components/ButtonUpdateContact.tsx";
 
 export const columns: ColumnDef<Contact>[] = [
     {
@@ -33,7 +34,8 @@ export const columns: ColumnDef<Contact>[] = [
             const phoneNumber: number = row.getValue<number>("phoneNumber")
 
             return (
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-3">
+                    <ButtonUpdateContact phoneNumber={phoneNumber}/>
                     <ButtonDeleteContact phoneNumber={phoneNumber}/>
                 </div>)
 

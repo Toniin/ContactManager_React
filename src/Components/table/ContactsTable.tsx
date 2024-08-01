@@ -13,6 +13,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table.tsx"
+import {useAppSelector} from '@/redux/hooks.ts'
+import RenameContactForm from "@/components/RenameContactForm.tsx";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -28,6 +30,8 @@ function ContactsTable<TData, TValue>({
         columns,
         getCoreRowModel: getCoreRowModel(),
     })
+
+    const isOnEdit = useAppSelector(state => state.isEditing)
 
     return (
         <div className="rounded-md border">
@@ -58,11 +62,24 @@ function ContactsTable<TData, TValue>({
                                 data-state={row.getIsSelected() && "selected"}
                             >
                                 {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} className="relative">
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    <TableCell key={cell.id}
+                                               className={`relative 
+                                                   ${cell.column.id === "contactIcon" ? "w-0" : ""}
+                                                       ${cell.column.id === "phoneNumber" ? "w-1/4" : ""}
+                                                   `}
+                                    >
+                                        {isOnEdit.value && row.getValue<number>("phoneNumber") === isOnEdit.phoneNumber && cell.column.columnDef.id === "name" ?
+                                            <RenameContactForm contact={{
+                                                name: row.getValue<string>("name"),
+                                                phoneNumber: row.getValue<number>("phoneNumber")
+                                            }}/>
+                                            :
+                                            flexRender(cell.column.columnDef.cell, cell.getContext())
+                                        }
+                                        {/*<p>{cell.column.id === "contactIcon"}</p>*/}
                                     </TableCell>
-                                )
-                                )}
+
+                                ))}
                             </TableRow>
                         ))
                     ) : (
