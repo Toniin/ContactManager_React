@@ -3,14 +3,13 @@ import Header from "@/components/Header.tsx";
 import {Toaster} from "@/components/ui/sonner"
 import {Provider} from 'react-redux'
 import {store} from "@/redux/store.ts";
-import ContactsPage from "@/views/ContactsPage.tsx";
+import {Outlet} from "react-router-dom";
 
 function App() {
-
     return (
         <Provider store={store}>
             <Header/>
-            <ContactsPage/>
+            <Outlet/>
             <Toaster/>
         </Provider>
 
