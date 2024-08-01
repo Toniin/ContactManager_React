@@ -16,7 +16,7 @@ function AddContactPage() {
                 <LuArrowLeft className="mr-2 h-4 w-4"/> Return
             </Button>
             <div className="flex flex-col items-center">
-                <h2 className="pt-5 text-2xl">Add new conact</h2>
+                <h2 className="pt-5 pb-10 text-4xl">Add new conact</h2>
                 <AddContactForm/>
             </div>
         </div>
