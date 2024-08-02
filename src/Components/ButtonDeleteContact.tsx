@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog"
 import {Button} from '@/components/ui/button'
 import {LuTrash2} from "react-icons/lu";
-import {deleteContact} from "@/redux/actions/contact.action.ts";
+import {deleteContact, getContacts} from "@/redux/actions/contact.action.ts";
 import {useAppDispatch} from "@/redux/hooks.ts";
 import { toast } from "sonner"
 
@@ -17,6 +17,8 @@ function ButtonDeleteContact({phoneNumber}: { phoneNumber: number }) {
 
     const onDeleteContact = () => {
         dispatch(deleteContact(phoneNumber))
+            .then(() => dispatch(getContacts()))
+
         toast.success("Contact deleted successfully", {
             description: `Contact with phone ${phoneNumber} is deleted`,
             action: {

@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import contactsReducer from "@/redux/contactsReducer.ts";
 import isEditingReducer from "@/redux/isEditingReducer.ts";
+import isSearchingReducer from "@/redux/isSearchingReducer.ts";
 
 export const store = configureStore({
     reducer: {
         contacts: contactsReducer,
         isEditing: isEditingReducer,
+        isSearching: isSearchingReducer,
     }
 })
 

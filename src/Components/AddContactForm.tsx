@@ -27,18 +27,29 @@ function AddContactForm() {
         },
     })
 
+    const { isSubmitting } = form.formState
+
     function onSubmit(newContact: z.infer<typeof formSchema>) {
-        dispatch(addContact(newContact))
 
-        toast.success("Contact added successfully", {
-            description: `Contact with phone ${newContact.phoneNumber} is added`,
-            action: {
-                label: "X",
-                onClick: () => null,
-            },
+        // Promise of 1s to show the loading button when form is submitting
+        return new Promise((resolve) => {
+            return setTimeout(() => {
+                resolve(true)
+            }, 1000)
+        }).then(() => {
+
+            dispatch(addContact(newContact))
+
+            toast.success("Contact added successfully", {
+                description: `Contact with phone ${newContact.phoneNumber} is added`,
+                action: {
+                    label: "X",
+                    onClick: () => null,
+                },
+            })
+
+            navigate("/contacts")
         })
-
-        navigate("/contacts")
     }
 
     return (
@@ -64,14 +75,14 @@ function AddContactForm() {
                         <FormItem>
                             <FormLabel>Phone number</FormLabel>
                             <FormControl>
-                                <Input type="number" placeholder="1234567890" {...field} />
+                                <Input type="number" placeholder="Phone number" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="" disabled={form.formState.isSubmitting}>
-                    {form.formState.isSubmitting &&
+                <Button type="submit" className="" disabled={isSubmitting}>
+                    {isSubmitting &&
                         <LuLoader2 className="animate-spin h-5 w-5 mr-3"/>
                     }
                     Add contact

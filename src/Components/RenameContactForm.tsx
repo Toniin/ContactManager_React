@@ -4,8 +4,8 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {useAppDispatch} from "@/redux/hooks.ts";
-import {renameContact} from "@/redux/actions/contact.action.ts";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks.ts";
+import {getContact, getContacts, renameContact} from "@/redux/actions/contact.action.ts";
 import {LuLoader2} from "react-icons/lu";
 import {toast} from "sonner";
 import {isNotEditing} from "@/redux/isEditingReducer.ts";
@@ -15,6 +15,7 @@ const formSchema = z.object({
 })
 
 function RenameContactForm({contact}: { contact: { name: string, phoneNumber: number } }) {
+    const contacts = useAppSelector(state => state.contacts)
     const dispatch = useAppDispatch()
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -25,25 +26,45 @@ function RenameContactForm({contact}: { contact: { name: string, phoneNumber: nu
     })
 
     function onSubmit(formData: z.infer<typeof formSchema>) {
-        const renamedContact = {
-            name: formData.name,
-            phoneNumber: contact.phoneNumber,
-        }
+        // Promise of 1s to show the loading button when form is submitting
+        return new Promise((resolve) => {
+            return setTimeout(() => {
+                resolve(true)
+            }, 1000)
+        }).then(() => {
 
-        if (formData.name !== contact.name) {
-            toast.success("Contact renamed successfully", {
-                description: `Contact with phone ${contact.phoneNumber} is renamed`,
-                action: {
-                    label: "X",
-                    onClick: () => null,
-                },
-            })
+            const renamedContact = {
+                name: formData.name,
+                phoneNumber: contact.phoneNumber,
+            }
 
-            dispatch(renameContact(renamedContact))
+            if (formData.name !== contact.name) {
+                // if (contacts.length > 1){
+                dispatch(renameContact(renamedContact))
+                    .then(() => {
+                        if (contacts.length > 1) {
+                            dispatch(getContacts())
+                        } else {
+                            dispatch(getContact(contact.phoneNumber))
+                        }
+                    })
+                // } else {
+                //     dispatch(renameContact(renamedContact))
+                //         .then(() => dispatch(isNotEditing()))
+                //         .then(() => dispatch(getContact(contact.phoneNumber)))
+                // }
+
+                toast.success("Contact renamed successfully", {
+                    description: `Contact with phone ${contact.phoneNumber} is renamed`,
+                    action: {
+                        label: "X",
+                        onClick: () => null,
+                    },
+                })
+            }
+
             dispatch(isNotEditing())
-        }
-
-        dispatch(isNotEditing())
+        })
     }
 
     return (
