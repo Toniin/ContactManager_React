@@ -1,30 +1,35 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import {
     createBrowserRouter, redirect,
     RouterProvider,
 } from "react-router-dom";
-import ContactsPage from "@/views/ContactsPage.tsx";
-import AddContactPage from "@/views/AddContactPage.tsx";
+import App from "@/App.tsx";
+import ContactsRoute from "@/routes/protected/ContactsRoute.tsx";
+import AddContactRoute from "@/routes/protected/AddContactRoute.tsx";
+import SignUpRoute from "@/routes/public/SignUpRoute.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
+        element: <App />,
         children: [
             {
                 index: true,
                 loader: async () => redirect('/contacts'),
             },
             {
+                path: "/sign-up",
+                element: <SignUpRoute />,
+            },
+            {
                 path: "/contacts",
-                element: <ContactsPage />,
+                element: <ContactsRoute />,
             },
             {
                 path: "/contacts/add",
-                element: <AddContactPage />,
+                element: <AddContactRoute />,
             },
         ],
     },

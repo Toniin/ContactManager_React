@@ -64,7 +64,7 @@ function SearchBar() {
             <div className="flex items-center">
                 <Input className="rounded-tr-none rounded-br-none max-w-sm" id="phoneNumber" type="number"
                        placeholder="Phone number" {...register("phoneNumber")}/>
-                <Button className="rounded-tl-n one rounded-bl-none" type="submit" size="icon" disabled={!isValid}>
+                <Button className="rounded-tl-none rounded-bl-none" type="submit" size="icon" disabled={!isValid}>
                     {isSubmitting ?
                         <LuLoader2 className="animate-spin h-5 w-5"/> :
                         <LuSearch className="h-5 w-5"/>
