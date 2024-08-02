@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {deleteContact, getContacts, renameContact} from "@/redux/actions/contact.action.ts";
+import {getContact, getContacts} from "@/redux/actions/contact.action.ts";
 import {Contact} from "@/models/contact.model.ts";
 
 const initialState: Contact[] = []
@@ -18,34 +18,18 @@ export const contactsSlice = createSlice({
             })
         })
 
-        builder.addCase(deleteContact.fulfilled, (state, action) => {
-            console.log("Message success : ", action.payload)
+        builder.addCase(getContact.fulfilled, (state, action) => {
+            const arrayFiltered = state.filter(contact => contact.phoneNumber === action.meta.arg)
+            const contactFiltered: Contact = arrayFiltered[0]
+            const contactFound: Contact = action.payload
 
-            const newArray = state.filter(contact => contact.phoneNumber !== action.meta.arg)
-
-            state.splice(0, state.length)
-
-            newArray.forEach(contact => {
-                state.push(contact)
-            })
-        })
-
-        builder.addCase(renameContact.fulfilled, (state, action) => {
-            const newArray = state.map(contact => {
-                if (contact.phoneNumber === action.meta.arg.phoneNumber) {
-                    return {
-                        phoneNumber: contact.phoneNumber,
-                        name: action.meta.arg.name
-                    }
-                }
-                return contact
-            })
-
-            state.splice(0, state.length)
-
-            newArray.forEach(contact => {
-                state.push(contact)
-            })
+            if (contactFiltered.name !== contactFound.name) {
+                state.splice(0, state.length)
+                state.push(contactFound)
+            } else {
+                state.splice(0, state.length)
+                state.push(contactFiltered)
+            }
         })
     },
 })

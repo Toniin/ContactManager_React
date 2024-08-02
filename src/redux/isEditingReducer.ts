@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { RootState } from '@/redux/store'
+import {createSlice} from '@reduxjs/toolkit'
 
 export interface isEditingState {
     value: boolean,
@@ -27,8 +26,9 @@ export const isEditingSlice = createSlice({
     }
 })
 
-export const { isEditing, isNotEditing} = isEditingSlice.actions
-
-export const selectCount = (state: RootState) => state.isEditing.value
+export const {
+    isEditing,
+    isNotEditing
+} = isEditingSlice.actions
 
 export default isEditingSlice.reducer

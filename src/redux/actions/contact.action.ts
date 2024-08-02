@@ -25,6 +25,17 @@ export const getContacts = createAsyncThunk('getContacts', async () => {
     return response.json()
 })
 
+export const getContact = createAsyncThunk('getContact', async (phoneNumber: number) => {
+    const optionsGetRequest = {
+        method: "GET",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+    }
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/find/${phoneNumber}`, optionsGetRequest)
+    return response.json()
+})
+
 export const deleteContact = createAsyncThunk('deleteContact', async (phoneNumber: number) => {
     const optionsDeleteRequest = {
         method: "DELETE",
