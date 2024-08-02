@@ -6,7 +6,7 @@ import SearchBar from "@/components/SearchBar.tsx";
 import {useAppSelector} from "@/redux/hooks.ts";
 import ButtonRefreshContacts from "@/components/ButtonRefreshContacts.tsx";
 
-function ContactsPage() {
+function ContactsRoute() {
     const isOnSearch = useAppSelector(state => state.isSearching)
     const navigate = useNavigate();
 
@@ -30,4 +30,4 @@ function ContactsPage() {
     );
 }
 
-export default ContactsPage;
+export default ContactsRoute;

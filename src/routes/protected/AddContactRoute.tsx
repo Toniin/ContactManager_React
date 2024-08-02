@@ -3,7 +3,7 @@ import {LuArrowLeft} from "react-icons/lu";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 
-function AddContactPage() {
+function AddContactRoute() {
     const navigate = useNavigate();
 
     const goToBack = () => {
@@ -23,4 +23,4 @@ function AddContactPage() {
     );
 }
 
-export default AddContactPage;
+export default AddContactRoute;
