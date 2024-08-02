@@ -22,7 +22,7 @@ function AddContactForm() {
         },
     })
 
-    const { isSubmitting } = form.formState
+    const {isSubmitting} = form.formState
 
     function onSubmit(newContact: Contact) {
 
@@ -34,16 +34,19 @@ function AddContactForm() {
         }).then(() => {
 
             dispatch(addContact(newContact))
+                .then((response) => {
+                    if (response.meta.requestStatus === "fulfilled") {
+                        toast.success("Contact added successfully", {
+                            description: `Contact with phone ${newContact.phoneNumber} is added`,
+                            action: {
+                                label: "X",
+                                onClick: () => null,
+                            },
+                        })
 
-            toast.success("Contact added successfully", {
-                description: `Contact with phone ${newContact.phoneNumber} is added`,
-                action: {
-                    label: "X",
-                    onClick: () => null,
-                },
-            })
-
-            navigate("/contacts")
+                        navigate("/contacts")
+                    }
+                })
         })
     }
 
