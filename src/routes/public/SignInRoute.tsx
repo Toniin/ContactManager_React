@@ -1,24 +1,24 @@
-import SignUpForm from "@/components/SignUpForm.tsx";
+import SignInForm from "@/components/SignInForm.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 
-function SignUpRoute() {
+function SignInRoute() {
     const navigate = useNavigate();
 
     return (
         <div className="container flex flex-col items-center py-10">
             <div className="flex flex-col">
-                <h2 className="pb-10 text-4xl">Sign up</h2>
-                <SignUpForm/>
+                <h2 className="pb-10 text-4xl">Sign in</h2>
+                <SignInForm/>
             </div>
             <div className="flex items-center pt-8">
-                <p>Already have an account ?</p>
-                <Button variant="link" className="text-blue-500" onClick={() => navigate("/sign-in")}>
-                    Sign in
+                <p>Don't have an account ?</p>
+                <Button variant="link" className="text-blue-500" onClick={() => navigate("/sign-up")}>
+                    Sign up
                 </Button>
             </div>
         </div>
     );
 }
 
-export default SignUpRoute;
+export default SignInRoute;

@@ -4,13 +4,12 @@ import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from '@/redux/hooks.ts'
 import {getContacts} from "@/redux/actions/contact.action.ts";
 
-
 function ContactsTable() {
     const contacts = useAppSelector(state => state.contacts)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getContacts())
+            dispatch(getContacts())
     }, [dispatch]);
 
     return (

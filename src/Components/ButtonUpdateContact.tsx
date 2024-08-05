@@ -1,7 +1,7 @@
 import {LuPencil} from "react-icons/lu";
 import {useAppDispatch, useAppSelector} from '@/redux/hooks.ts'
 import {Button} from "@/components/ui/button.tsx";
-import {isEditing, isNotEditing} from "@/redux/isEditingReducer.ts";
+import {isEditing, isNotEditing} from "@/redux/reducers/isEditingReducer.ts";
 
 function ButtonUpdateContact({phoneNumber}: { phoneNumber: number }) {
     const isOnEdit = useAppSelector(state => state.isEditing)

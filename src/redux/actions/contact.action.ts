@@ -1,61 +1,32 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Contact} from "@/models/contact.model.ts";
+import {contactsAPI} from "@/lib/axios.ts";
 
 export const addContact = createAsyncThunk('addContact', async (newContact: Contact) => {
-    const optionsPostRequest = {
-        method: 'POST',
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newContact)
-    };
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/add`, optionsPostRequest)
-    return response.json()
+    return await contactsAPI.post("/add", JSON.stringify(newContact))
+        .then(response => response.data)
+        .catch(error => error.response.data);
 })
 
 export const getContacts = createAsyncThunk('getContacts', async () => {
-    const optionsGetRequest = {
-        method: "GET",
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-        },
-    }
-    const response = await fetch(import.meta.env.VITE_API_URL, optionsGetRequest)
-    return response.json()
+    const response = await contactsAPI.get("")
+    return response.data
 })
 
 export const getContact = createAsyncThunk('getContact', async (phoneNumber: number) => {
-    const optionsGetRequest = {
-        method: "GET",
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-        },
-    }
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/find/${phoneNumber}`, optionsGetRequest)
-    return response.json()
+    return contactsAPI.get(`/find/${phoneNumber}`)
+        .then(response => response.data)
+        .catch(error => error.response.data);
 })
 
 export const deleteContact = createAsyncThunk('deleteContact', async (phoneNumber: number) => {
-    const optionsDeleteRequest = {
-        method: "DELETE",
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-        },
-    }
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/delete/${phoneNumber}`, optionsDeleteRequest)
-    return response.text()
+    return await contactsAPI.delete(`/delete/${phoneNumber}`)
+        .then(response => response.data)
+        .catch(error => error.response.data)
 })
 
-export const renameContact = createAsyncThunk('addContact', async (renamedContact: Contact) => {
-    const optionsPutRequest = {
-        method: 'PUT',
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(renamedContact)
-    };
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/update/${renamedContact.phoneNumber}`, optionsPutRequest)
-    return response.json()
+export const renameContact = createAsyncThunk('renameContact', async (renamedContact: Contact) => {
+    return contactsAPI.put(`/update/${renamedContact.phoneNumber}`, JSON.stringify(renamedContact))
+        .then(response => response.data)
+        .catch(error => error.response.data);
 })

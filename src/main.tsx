@@ -9,6 +9,7 @@ import App from "@/App.tsx";
 import ContactsRoute from "@/routes/protected/ContactsRoute.tsx";
 import AddContactRoute from "@/routes/protected/AddContactRoute.tsx";
 import SignUpRoute from "@/routes/public/SignUpRoute.tsx";
+import SignInRoute from "@/routes/public/SignInRoute.tsx";
 
 const router = createBrowserRouter([
     {
@@ -17,11 +18,15 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                loader: async () => redirect('/contacts'),
+                loader: async () => redirect('/sign-in'),
             },
             {
                 path: "/sign-up",
                 element: <SignUpRoute />,
+            },
+            {
+                path: "/sign-in",
+                element: <SignInRoute />,
             },
             {
                 path: "/contacts",

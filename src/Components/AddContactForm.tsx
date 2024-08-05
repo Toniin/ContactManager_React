@@ -24,30 +24,37 @@ function AddContactForm() {
 
     const {isSubmitting} = form.formState
 
-    function onSubmit(newContact: Contact) {
+    const onSubmit = async (newContact: Contact) => {
 
         // Promise of 1s to show the loading button when form is submitting
-        return new Promise((resolve) => {
+        await new Promise((resolve) => {
             return setTimeout(() => {
                 resolve(true)
             }, 1000)
-        }).then(() => {
-
-            dispatch(addContact(newContact))
-                .then((response) => {
-                    if (response.meta.requestStatus === "fulfilled") {
-                        toast.success("Contact added successfully", {
-                            description: `Contact with phone ${newContact.phoneNumber} is added`,
-                            action: {
-                                label: "X",
-                                onClick: () => null,
-                            },
-                        })
-
-                        navigate("/contacts")
-                    }
-                })
         })
+
+        dispatch(addContact(newContact))
+            .then((response) => {
+                if (response.payload.length === 0) {
+                    toast.error("You do not have permission", {
+                        action: {
+                            label: "X",
+                            onClick: () => null,
+                        },
+                    })
+                    return;
+                }
+
+                toast.success(response.payload.message, {
+                    description: `Contact with phone ${newContact.phoneNumber} is added`,
+                    action: {
+                        label: "X",
+                        onClick: () => null,
+                    },
+                })
+
+                navigate("/contacts")
+            })
     }
 
     return (

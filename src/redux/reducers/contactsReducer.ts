@@ -19,6 +19,10 @@ export const contactsSlice = createSlice({
         })
 
         builder.addCase(getContact.fulfilled, (state, action) => {
+            if (action.payload.isError) {
+                throw new Error(action.payload.message)
+            }
+
             const arrayFiltered = state.filter(contact => contact.phoneNumber === action.meta.arg)
             const contactFiltered: Contact = arrayFiltered[0]
             const contactFound: Contact = action.payload

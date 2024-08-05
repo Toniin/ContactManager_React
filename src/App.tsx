@@ -2,15 +2,18 @@ import './App.css'
 import Header from "@/components/Header.tsx";
 import {Toaster} from "@/components/ui/sonner"
 import {Provider} from 'react-redux'
-import {store} from "@/redux/store.ts";
+import {persistor, store} from './redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 import {Outlet} from "react-router-dom";
 
 function App() {
     return (
         <Provider store={store}>
-            <Header/>
-            <Outlet/>
-            <Toaster/>
+            <PersistGate loading={null} persistor={persistor}>
+                <Header/>
+                <Outlet/>
+                <Toaster/>
+            </PersistGate>
         </Provider>
 
     )

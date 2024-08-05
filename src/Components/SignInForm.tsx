@@ -5,14 +5,12 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@
 import {Input} from "@/components/ui/input"
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@/redux/hooks.ts";
-import {toast} from "sonner";
 import {LuLoader2} from "react-icons/lu";
-import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
-import {SignUpFormUser, signUpSchema} from "@/models/user.model.ts";
-import {signUp} from "@/redux/actions/user.action.ts";
+import {SignInFormUser, signInSchema} from "@/models/user.model.ts";
 import {useState} from "react";
+import {signIn} from "@/redux/actions/user.action.ts";
 
-function SignUpForm() {
+function SignInForm() {
     const [errorSubmit, setErrorSubmit] = useState({
         isError: false,
         message: ""
@@ -20,18 +18,17 @@ function SignUpForm() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
 
-    const form = useForm<SignUpFormUser>({
-        resolver: zodResolver(signUpSchema),
+    const form = useForm<SignInFormUser>({
+        resolver: zodResolver(signInSchema),
         defaultValues: {
             username: "",
             password: "",
-            role: "USER"
         },
     })
 
     const {isSubmitting} = form.formState
 
-    const onSubmit = async (newUser: SignUpFormUser) => {
+    const onSubmit = async (newUser: SignInFormUser) => {
 
         // Promise of 1s to show the loading button when form is submitting
         await new Promise((resolve) => {
@@ -39,21 +36,17 @@ function SignUpForm() {
                 resolve(true)
             }, 1000)
         })
-        dispatch(signUp(newUser))
-            .then(() => {
-                    toast.success("User sign up successfully", {
-                        description: `${newUser.username} is sign up with role : ${newUser.role}`,
-                        action: {
-                            label: "X",
-                            onClick: () => null,
-                        },
-                    })
+
+        dispatch(signIn(newUser))
+            .then((data) => {
+                    const token = data.payload.token
+                    localStorage.setItem("Token", token);
 
                     setErrorSubmit({
                         isError: false,
                         message: ""
                     })
-                    navigate("/sign-in")
+                    navigate("/contacts")
                 }
             ).catch(error => {
             setErrorSubmit({
@@ -93,50 +86,17 @@ function SignUpForm() {
                     )}
                 />
 
-                <FormField
-                    control={form.control}
-                    name="role"
-                    render={({field}) => (
-                        <FormItem className="space-y-5">
-                            <FormLabel>Your role</FormLabel>
-                            <FormControl>
-                                <RadioGroup
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                    className="flex items-center space-x-10"
-                                >
-                                    <FormItem className="flex items-center space-x-2 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="USER"/>
-                                        </FormControl>
-                                        <FormLabel className="font-normal">
-                                            USER
-                                        </FormLabel>
-                                    </FormItem>
-                                    <FormItem className="flex items-center space-x-2 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="ADMIN"/>
-                                        </FormControl>
-                                        <FormLabel className="font-normal">ADMIN</FormLabel>
-                                    </FormItem>
-                                </RadioGroup>
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
                 {errorSubmit && <p className="text-red-500">{errorSubmit.message}</p>}
 
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                     {isSubmitting &&
                         <LuLoader2 className="animate-spin h-5 w-5 mr-3"/>
                     }
-                    Sign up
+                    Sign in
                 </Button>
             </form>
         </Form>
     )
 }
 
-export default SignUpForm;
+export default SignInForm;

@@ -16,7 +16,7 @@ export const isSearchingSlice = createSlice({
             state.value = true
         },
         isNotSearching: state => {
-            state.value = false
+            state.value = initialState.value
         },
 
     }
