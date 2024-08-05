@@ -2,8 +2,10 @@ import ButtonSignOut from "@/components/ButtonSignOut.tsx";
 import {useAppSelector} from "@/redux/hooks.ts";
 
 function Header() {
-    const user = useAppSelector(state => state.persistedReducer.user)
-    const token = localStorage.getItem('token');
+    const user = useAppSelector(state => state.persistedReducer)
+    const token = localStorage.getItem('Token');
+
+    console.log(user.isAuthenticated)
 
     return (
         <header className="container flex justify-between items-center my-10">
