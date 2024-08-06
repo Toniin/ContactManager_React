@@ -76,7 +76,6 @@ function ContactsTable<TData, TValue>({
                                             :
                                             flexRender(cell.column.columnDef.cell, cell.getContext())
                                         }
-                                        {/*<p>{cell.column.id === "contactIcon"}</p>*/}
                                     </TableCell>
 
                                 ))}

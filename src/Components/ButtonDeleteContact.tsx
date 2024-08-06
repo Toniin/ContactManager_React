@@ -10,22 +10,35 @@ import {Button} from '@/components/ui/button'
 import {LuTrash2} from "react-icons/lu";
 import {deleteContact, getContacts} from "@/redux/actions/contact.action.ts";
 import {useAppDispatch} from "@/redux/hooks.ts";
-import { toast } from "sonner"
+import {toast} from "sonner"
 
 function ButtonDeleteContact({phoneNumber}: { phoneNumber: number }) {
     const dispatch = useAppDispatch()
 
     const onDeleteContact = () => {
         dispatch(deleteContact(phoneNumber))
-            .then(() => dispatch(getContacts()))
+            .then((response) => {
+                    if (response.payload.length === 0) {
+                        toast.error("You do not have permission", {
+                            action: {
+                                label: "X",
+                                onClick: () => null,
+                            },
+                        })
+                        return;
+                    }
 
-        toast.success("Contact deleted successfully", {
-            description: `Contact with phone ${phoneNumber} is deleted`,
-            action: {
-                label: "X",
-                onClick: () => null,
-            },
-        })
+                    dispatch(getContacts())
+
+                    toast.success(response.payload.message, {
+                        description: `Contact with phone ${phoneNumber} is deleted`,
+                        action: {
+                            label: "X",
+                            onClick: () => null,
+                        },
+                    })
+                }
+            )
     }
 
     return (

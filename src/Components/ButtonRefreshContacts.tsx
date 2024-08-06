@@ -2,7 +2,7 @@ import {getContacts} from "@/redux/actions/contact.action.ts";
 import {useAppDispatch} from "@/redux/hooks.ts";
 import {LuRotateCw} from "react-icons/lu";
 import {Button} from "@/components/ui/button.tsx";
-import {isNotSearching} from "@/redux/isSearchingReducer.ts";
+import {isNotSearching} from "@/redux/reducers/isSearchingReducer.ts";
 
 function ButtonRefreshContacts() {
     const dispatch = useAppDispatch()

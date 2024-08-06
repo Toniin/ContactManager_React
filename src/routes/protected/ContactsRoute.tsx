@@ -22,7 +22,7 @@ function ContactsRoute() {
                     : <SearchBar/>
                 }
             </div>
-            <ContactsTable/>
+            <ContactsTable />
             <Button className="fixed bottom-5 right-1/4" size="icon" onClick={goToAddContactPage}>
                 <LuPlus/>
             </Button>

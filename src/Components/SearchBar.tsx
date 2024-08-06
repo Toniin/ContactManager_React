@@ -8,7 +8,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {getContact} from "@/redux/actions/contact.action.ts";
 import {useAppDispatch} from "@/redux/hooks.ts";
 import {useState} from "react";
-import {isSearching} from "@/redux/isSearchingReducer.ts";
+import {isSearching} from "@/redux/reducers/isSearchingReducer.ts";
 
 const formSchema = z.object({
     phoneNumber: z.coerce.number().min(1),
@@ -32,30 +32,30 @@ function SearchBar() {
         }
     )
 
-    function onSubmit(formData: z.infer<typeof formSchema>) {
+    const onSubmit = async (formData: z.infer<typeof formSchema>) => {
         // Promise of 1s to show the loading button when form is submitting
-        return new Promise((resolve) => {
+        await new Promise((resolve) => {
             return setTimeout(() => {
                 resolve(true)
             }, 1000)
         })
+
+        dispatch(getContact(formData.phoneNumber))
             .then(() => {
-                dispatch(getContact(formData.phoneNumber))
-                    .then(() => {
-                        reset()
-                        dispatch(isSearching())
-                        setError({
-                            isError: false,
-                            message: ""
-                        })
-                    })
-                    .catch(() => {
-                        setError({
-                            isError: true,
-                            message: "Contact not found",
-                        })
-                    })
+                reset()
+                dispatch(isSearching())
+                setError({
+                    isError: false,
+                    message: ""
+                })
             })
+            .catch((error) => {
+                setError({
+                    isError: true,
+                    message: error.message,
+                })
+            })
+
     }
 
     return (

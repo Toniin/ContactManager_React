@@ -1,17 +1,32 @@
-import { configureStore } from '@reduxjs/toolkit'
-import contactsReducer from "@/redux/contactsReducer.ts";
-import isEditingReducer from "@/redux/isEditingReducer.ts";
-import isSearchingReducer from "@/redux/isSearchingReducer.ts";
-import userReducer from "@/redux/userReducer.ts";
+import {configureStore} from '@reduxjs/toolkit'
+import storage from 'redux-persist/lib/storage';
+import {persistReducer, persistStore} from 'redux-persist';
+import contactsReducer from "@/redux/reducers/contactsReducer.ts";
+import isEditingReducer from "@/redux/reducers/isEditingReducer.ts";
+import isSearchingReducer from "@/redux/reducers/isSearchingReducer.ts";
+import userReducer from "@/redux/reducers/userReducer.ts";
+
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, userReducer)
 
 export const store = configureStore({
     reducer: {
-        user: userReducer,
+        persistedReducer,
         contacts: contactsReducer,
         isEditing: isEditingReducer,
         isSearching: isSearchingReducer,
-    }
+    },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        })
 })
+
+export const persistor = persistStore(store)
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>

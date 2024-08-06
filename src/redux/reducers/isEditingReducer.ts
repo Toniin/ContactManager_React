@@ -19,8 +19,8 @@ export const isEditingSlice = createSlice({
             state.phoneNumber = action.payload
         },
         isNotEditing: state => {
-            state.value = false
-            state.phoneNumber = 0
+            state.value = initialState.value
+            state.phoneNumber = initialState.phoneNumber
         },
 
     }

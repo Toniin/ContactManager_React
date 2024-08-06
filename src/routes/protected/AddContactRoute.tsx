@@ -6,13 +6,9 @@ import {useNavigate} from "react-router-dom";
 function AddContactRoute() {
     const navigate = useNavigate();
 
-    const goToBack = () => {
-        navigate(-1)
-    }
-
     return (
         <div className="container w-1/2 py-10">
-            <Button onClick={goToBack}>
+            <Button onClick={() => navigate(-1)}>
                 <LuArrowLeft className="mr-2 h-4 w-4"/> Return
             </Button>
             <div className="flex flex-col items-center">

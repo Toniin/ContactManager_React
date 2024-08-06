@@ -4,6 +4,13 @@ export const userSchema = z.object({
     username: z.string().min(1, {
         message: "Please enter username"
     }),
+    isSignIn: z.boolean(),
+})
+
+export const signUpSchema = z.object({
+    username: z.string().min(1, {
+        message: "Please enter username"
+    }),
     password: z.string().min(1, {
         message: "Please enter password"
     }),
@@ -12,6 +19,17 @@ export const userSchema = z.object({
     }),
 })
 
-export type SignUpFormUser = z.infer<typeof userSchema>;
+export const signInSchema = z.object({
+    username: z.string().min(1, {
+        message: "Please enter username"
+    }),
+    password: z.string().min(1, {
+        message: "Please enter password"
+    })
+})
 
-export type User = Pick<z.infer<typeof userSchema>, "username" | "role">;
+export type SignUpFormUser = z.infer<typeof signUpSchema>;
+
+export type SignInFormUser = z.infer<typeof signInSchema>;
+
+export type User = z.infer<typeof userSchema>;

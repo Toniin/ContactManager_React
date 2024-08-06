@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from "@/redux/hooks.ts";
 import {getContact, getContacts, renameContact} from "@/redux/actions/contact.action.ts";
 import {LuLoader2} from "react-icons/lu";
 import {toast} from "sonner";
-import {isNotEditing} from "@/redux/isEditingReducer.ts";
+import {isNotEditing} from "@/redux/reducers/isEditingReducer.ts";
 
 const formSchema = z.object({
     name: z.string().min(1, {message: "Please enter name"}),
@@ -25,46 +25,51 @@ function RenameContactForm({contact}: { contact: { name: string, phoneNumber: nu
         },
     })
 
-    function onSubmit(formData: z.infer<typeof formSchema>) {
+    const onSubmit = async (formData: z.infer<typeof formSchema>) => {
         // Promise of 1s to show the loading button when form is submitting
-        return new Promise((resolve) => {
+        await new Promise((resolve) => {
             return setTimeout(() => {
                 resolve(true)
             }, 1000)
-        }).then(() => {
+        })
 
-            const renamedContact = {
-                name: formData.name,
-                phoneNumber: contact.phoneNumber,
-            }
+        const renamedContact = {
+            name: formData.name,
+            phoneNumber: contact.phoneNumber,
+        }
 
-            if (formData.name !== contact.name) {
-                // if (contacts.length > 1){
-                dispatch(renameContact(renamedContact))
-                    .then(() => {
+        if (formData.name !== contact.name) {
+            dispatch(renameContact(renamedContact))
+                .then(
+                    (response) => {
+                        if (response.payload.length === 0) {
+                            toast.error("You do not have permission", {
+                                action: {
+                                    label: "X",
+                                    onClick: () => null,
+                                },
+                            })
+                            return;
+                        }
+
                         if (contacts.length > 1) {
                             dispatch(getContacts())
                         } else {
                             dispatch(getContact(contact.phoneNumber))
                         }
-                    })
-                // } else {
-                //     dispatch(renameContact(renamedContact))
-                //         .then(() => dispatch(isNotEditing()))
-                //         .then(() => dispatch(getContact(contact.phoneNumber)))
-                // }
 
-                toast.success("Contact renamed successfully", {
-                    description: `Contact with phone ${contact.phoneNumber} is renamed`,
-                    action: {
-                        label: "X",
-                        onClick: () => null,
-                    },
-                })
-            }
+                        toast.success(response.payload.message, {
+                            description: `Contact with phone ${contact.phoneNumber} is renamed`,
+                            action: {
+                                label: "X",
+                                onClick: () => null,
+                            },
+                        })
+                    }
+                )
+        }
 
-            dispatch(isNotEditing())
-        })
+        dispatch(isNotEditing())
     }
 
     return (
