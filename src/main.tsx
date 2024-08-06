@@ -12,11 +12,13 @@ import SignUpRoute from "@/routes/public/SignUpRoute.tsx";
 import SignInRoute from "@/routes/public/SignInRoute.tsx";
 import ProtectedRoutes from "@/routes/ProtectedRoutes.tsx";
 import PublicRoutes from "@/routes/PublicRoutes.tsx";
+import ErrorRoute from "@/routes/public/ErrorRoute.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
+        errorElement: <ErrorRoute />,
         children: [
             {
                 index: true,
