@@ -4,7 +4,7 @@ export const userSchema = z.object({
     username: z.string().min(1, {
         message: "Please enter username"
     }),
-    isAuthenticated: z.boolean(),
+    isSignIn: z.boolean(),
 })
 
 export const signUpSchema = z.object({

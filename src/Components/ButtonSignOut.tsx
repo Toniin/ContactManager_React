@@ -11,7 +11,7 @@ function ButtonSignOut() {
     const signOut = () => {
         localStorage.clear();
         dispatch(userSignOut())
-        navigate("/sign-in")
+        navigate("/sign-in", {replace: true})
     }
 
     return (

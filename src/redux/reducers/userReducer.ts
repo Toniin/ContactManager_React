@@ -4,7 +4,7 @@ import {signIn, signUp} from "@/redux/actions/user.action.ts";
 
 const initialState: User = {
     username: "",
-    isAuthenticated: false
+    isSignIn: false
 }
 
 export const userSlice = createSlice({
@@ -13,7 +13,7 @@ export const userSlice = createSlice({
     reducers: {
         userSignOut: state => {
             state.username = initialState.username
-            state.isAuthenticated = initialState.isAuthenticated
+            state.isSignIn = initialState.isSignIn
         },
     },
     extraReducers: (builder) => {
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
             }
 
             state.username = action.payload.username
-            state.isAuthenticated = true
+            state.isSignIn = true
         })
     },
 })
