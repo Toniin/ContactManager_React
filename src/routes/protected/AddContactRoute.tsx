@@ -1,4 +1,4 @@
-import AddContactForm from "@/components/AddContactForm.tsx";
+import AddContactForm from "@/components/forms/AddContactForm.tsx";
 import {LuArrowLeft} from "react-icons/lu";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";

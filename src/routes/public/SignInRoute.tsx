@@ -1,4 +1,4 @@
-import SignInForm from "@/components/SignInForm.tsx";
+import SignInForm from "@/components/forms/SignInForm.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 

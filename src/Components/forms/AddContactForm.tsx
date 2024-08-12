@@ -1,14 +1,16 @@
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
-import {Button} from "@/components/ui/button"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
+import {Button} from "@/components/ui/button.tsx"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form.tsx"
+import {Input} from "@/components/ui/input.tsx"
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@/redux/hooks.ts";
 import {addContact} from "@/redux/actions/contact.action.ts";
 import {toast} from "sonner";
 import {LuLoader2} from "react-icons/lu";
 import {Contact, contactSchema} from "@/models/contact.model.ts";
+import {phoneValidator_FR_fr} from "@/lib/phone.validator.ts";
+import { withMask } from 'use-mask-input';
 
 function AddContactForm() {
     const navigate = useNavigate();
@@ -18,7 +20,7 @@ function AddContactForm() {
         resolver: zodResolver(contactSchema),
         defaultValues: {
             name: "",
-            phoneNumber: 0,
+            phoneNumber: "",
         },
     })
 
@@ -32,6 +34,14 @@ function AddContactForm() {
                 resolve(true)
             }, 1000)
         })
+
+        if (!phoneValidator_FR_fr(newContact.phoneNumber.toString())) {
+            form.setError("phoneNumber", {
+                type: "manual",
+                message: "Please enter valid phone number",
+            })
+            return;
+        }
 
         dispatch(addContact(newContact))
             .then((response) => {
@@ -80,7 +90,7 @@ function AddContactForm() {
                         <FormItem>
                             <FormLabel>Phone number</FormLabel>
                             <FormControl>
-                                <Input type="number" placeholder="Phone number" {...field} />
+                                <Input placeholder="(+33)1 23 45 67 89" {...field} ref={withMask('(+33)9 99 99 99 99')} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>

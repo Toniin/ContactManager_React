@@ -1,20 +1,21 @@
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
-import {Button} from "@/components/ui/button"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
+import {Button} from "@/components/ui/button.tsx"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form.tsx"
+import {Input} from "@/components/ui/input.tsx"
 import {useAppDispatch, useAppSelector} from "@/redux/hooks.ts";
 import {getContact, getContacts, renameContact} from "@/redux/actions/contact.action.ts";
 import {LuLoader2} from "react-icons/lu";
 import {toast} from "sonner";
 import {isNotEditing} from "@/redux/reducers/isEditingReducer.ts";
+import {phoneFormatInternational_FR_fr} from "@/lib/phone.validator.ts";
 
 const formSchema = z.object({
     name: z.string().min(1, {message: "Please enter name"}),
 })
 
-function RenameContactForm({contact}: { contact: { name: string, phoneNumber: number } }) {
+function RenameContactForm({contact}: { contact: { name: string, phoneNumber: string } }) {
     const contacts = useAppSelector(state => state.contacts)
     const dispatch = useAppDispatch()
 
@@ -35,7 +36,7 @@ function RenameContactForm({contact}: { contact: { name: string, phoneNumber: nu
 
         const renamedContact = {
             name: formData.name,
-            phoneNumber: contact.phoneNumber,
+            phoneNumber: phoneFormatInternational_FR_fr(contact.phoneNumber),
         }
 
         if (formData.name !== contact.name) {
@@ -55,7 +56,7 @@ function RenameContactForm({contact}: { contact: { name: string, phoneNumber: nu
                         if (contacts.length > 1) {
                             dispatch(getContacts())
                         } else {
-                            dispatch(getContact(contact.phoneNumber))
+                            dispatch(getContact(renamedContact.phoneNumber))
                         }
 
                         toast.success(response.payload.message, {

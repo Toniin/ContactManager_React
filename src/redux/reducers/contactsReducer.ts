@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {getContact, getContacts} from "@/redux/actions/contact.action.ts";
 import {Contact} from "@/models/contact.model.ts";
+import {phoneFormatInternational_FR_fr} from "@/lib/phone.validator.ts";
 
 const initialState: Contact[] = []
 
@@ -23,15 +24,14 @@ export const contactsSlice = createSlice({
                 throw new Error(action.payload.message)
             }
 
-            const arrayFiltered = state.filter(contact => contact.phoneNumber === action.meta.arg)
+            const arrayFiltered = state.filter(contact => phoneFormatInternational_FR_fr(contact.phoneNumber) === action.meta.arg)
             const contactFiltered: Contact = arrayFiltered[0]
             const contactFound: Contact = action.payload
 
+            state.splice(0, state.length)
             if (contactFiltered.name !== contactFound.name) {
-                state.splice(0, state.length)
                 state.push(contactFound)
             } else {
-                state.splice(0, state.length)
                 state.push(contactFiltered)
             }
         })

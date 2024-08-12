@@ -5,8 +5,8 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import {Button} from '@/components/ui/button'
+} from "@/components/ui/dialog.tsx"
+import {Button} from '@/components/ui/button.tsx'
 import {LuTrash2} from "react-icons/lu";
 import {deleteContact, getContacts} from "@/redux/actions/contact.action.ts";
 import {useAppDispatch} from "@/redux/hooks.ts";

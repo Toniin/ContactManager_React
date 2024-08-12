@@ -1,4 +1,4 @@
-import SignUpForm from "@/components/SignUpForm.tsx";
+import SignUpForm from "@/components/forms/SignUpForm.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 

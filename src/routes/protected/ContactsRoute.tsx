@@ -4,7 +4,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
 import SearchBar from "@/components/SearchBar.tsx";
 import {useAppSelector} from "@/redux/hooks.ts";
-import ButtonRefreshContacts from "@/components/ButtonRefreshContacts.tsx";
+import ButtonRefreshContacts from "@/components/buttons/ButtonRefreshContacts.tsx";
 
 function ContactsRoute() {
     const isOnSearch = useAppSelector(state => state.isSearching)

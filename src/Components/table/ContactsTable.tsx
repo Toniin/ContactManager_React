@@ -14,7 +14,7 @@ import {
     TableRow,
 } from "@/components/ui/table.tsx"
 import {useAppSelector} from '@/redux/hooks.ts'
-import RenameContactForm from "@/components/RenameContactForm.tsx";
+import RenameContactForm from "@/components/forms/RenameContactForm.tsx";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]

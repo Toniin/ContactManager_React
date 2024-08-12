@@ -1,8 +1,8 @@
 import {ColumnDef} from "@tanstack/react-table"
 import {Contact} from "@/models/contact.model.ts";
-import ButtonDeleteContact from "@/components/ButtonDeleteContact.tsx";
+import ButtonDeleteContact from "@/components/buttons/ButtonDeleteContact.tsx";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
-import ButtonUpdateContact from "@/components/ButtonUpdateContact.tsx";
+import ButtonUpdateContact from "@/components/buttons/ButtonUpdateContact.tsx";
 
 export const columns: ColumnDef<Contact>[] = [
     {

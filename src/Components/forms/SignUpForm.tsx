@@ -1,13 +1,13 @@
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
-import {Button} from "@/components/ui/button"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
+import {Button} from "@/components/ui/button.tsx"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form.tsx"
+import {Input} from "@/components/ui/input.tsx"
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@/redux/hooks.ts";
 import {toast} from "sonner";
 import {LuLoader2} from "react-icons/lu";
-import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx"
 import {SignUpFormUser, signUpSchema} from "@/models/user.model.ts";
 import {signUp} from "@/redux/actions/user.action.ts";
 import {useState} from "react";

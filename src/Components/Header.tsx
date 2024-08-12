@@ -1,4 +1,4 @@
-import ButtonSignOut from "@/components/ButtonSignOut.tsx";
+import ButtonSignOut from "@/components/buttons/ButtonSignOut.tsx";
 import {useAppSelector} from "@/redux/hooks.ts";
 
 function Header() {
