@@ -2,12 +2,12 @@ import {createSlice} from '@reduxjs/toolkit'
 
 export interface isEditingState {
     value: boolean,
-    phoneNumber: number
+    phoneNumber: string
 }
 
 const initialState: isEditingState = {
     value: false,
-    phoneNumber: 0,
+    phoneNumber: "",
 }
 
 export const isEditingSlice = createSlice({

@@ -12,7 +12,7 @@ import {deleteContact, getContacts} from "@/redux/actions/contact.action.ts";
 import {useAppDispatch} from "@/redux/hooks.ts";
 import {toast} from "sonner"
 
-function ButtonDeleteContact({phoneNumber}: { phoneNumber: number }) {
+function ButtonDeleteContact({phoneNumber}: { phoneNumber: string }) {
     const dispatch = useAppDispatch()
 
     const onDeleteContact = () => {

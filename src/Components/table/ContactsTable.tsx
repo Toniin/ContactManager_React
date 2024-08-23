@@ -68,10 +68,10 @@ function ContactsTable<TData, TValue>({
                                                        ${cell.column.id === "phoneNumber" ? "w-1/4" : ""}
                                                    `}
                                     >
-                                        {isOnEdit.value && row.getValue<number>("phoneNumber") === isOnEdit.phoneNumber && cell.column.columnDef.id === "name" ?
+                                        {isOnEdit.value && row.getValue<string>("phoneNumber") === isOnEdit.phoneNumber && cell.column.columnDef.id === "name" ?
                                             <RenameContactForm contact={{
                                                 name: row.getValue<string>("name"),
-                                                phoneNumber: row.getValue<number>("phoneNumber")
+                                                phoneNumber: row.getValue<string>("phoneNumber")
                                             }}/>
                                             :
                                             flexRender(cell.column.columnDef.cell, cell.getContext())

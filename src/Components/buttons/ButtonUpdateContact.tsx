@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '@/redux/hooks.ts'
 import {Button} from "@/components/ui/button.tsx";
 import {isEditing, isNotEditing} from "@/redux/reducers/isEditingReducer.ts";
 
-function ButtonUpdateContact({phoneNumber}: { phoneNumber: number }) {
+function ButtonUpdateContact({phoneNumber}: { phoneNumber: string }) {
     const isOnEdit = useAppSelector(state => state.isEditing)
     const dispatch = useAppDispatch();
 

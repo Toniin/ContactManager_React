@@ -9,7 +9,7 @@ export const columns: ColumnDef<Contact>[] = [
         id: "contactIcon",
         cell: ({row}) => {
             const sliceNameUppercase: string = row.getValue<string>("name").slice(0, 2).toUpperCase()
-            const imageURL = `https://api.dicebear.com/9.x/personas/svg?seed=${row.getValue<number>("phoneNumber")}`
+            const imageURL = `https://api.dicebear.com/9.x/personas/svg?seed=${row.getValue<string>("phoneNumber")}`
             return (
                 <Avatar className="w-16 h-16">
                     <AvatarImage src={imageURL} alt="icon of contact"/>
@@ -31,7 +31,7 @@ export const columns: ColumnDef<Contact>[] = [
     {
         id: "actions",
         cell: ({row}) => {
-            const phoneNumber: number = row.getValue<number>("phoneNumber")
+            const phoneNumber: string = row.getValue<string>("phoneNumber")
 
             return (
                 <div className="flex justify-end gap-3">
