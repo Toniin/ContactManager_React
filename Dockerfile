@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 RUN npm install
 COPY . .
+RUN npm install -g tsc
 RUN npm run build
 #EXPOSE 4173
 #CMD ["npm", "preview", "--host", "0.0.0.0", "--port", "4173"]
