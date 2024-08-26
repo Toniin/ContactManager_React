@@ -1,6 +1,6 @@
 import './App.css'
-import Header from "./components/Header.tsx";
-import {Toaster} from "./components/ui/sonner"
+import Header from "@/components/Header.tsx";
+import {Toaster} from "@/components/ui/sonner"
 import {Provider} from 'react-redux'
 import {persistor, store} from './redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
