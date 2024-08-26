@@ -5,6 +5,7 @@ COPY package.json ./
 RUN npm install
 COPY . .
 RUN npm install -g tsc
+RUN npm install -D vite
 # RUN npm run build
 EXPOSE 5173
 CMD ["npm", "run", "dev"]
