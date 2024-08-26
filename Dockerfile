@@ -3,10 +3,10 @@ FROM node:20.15.1-slim AS build
 WORKDIR /app
 COPY package.json ./
 RUN npm install
-RUN npm install -g tsc
-RUN npm install -D vite
+# RUN npm install -g tsc
+# RUN npm install -D vite
 COPY . .
-RUN npm run build
+RUN vite build
 #EXPOSE 4173
 #CMD ["npm", "preview", "--host", "0.0.0.0", "--port", "4173"]
 
