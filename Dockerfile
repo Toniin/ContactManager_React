@@ -1,6 +1,6 @@
 ### STAGE 1: ###
 FROM node:alpine3.20 as build
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
@@ -11,5 +11,5 @@ RUN npm run build
 
 ## STAGE 2: ###
  FROM nginx:1.27.1-alpine3.20-slim
- COPY --from=build /usr/src/app/dist/ /usr/share/nginx/html
+ COPY --from=build /app/dist/ /usr/share/nginx/html
  EXPOSE 80
