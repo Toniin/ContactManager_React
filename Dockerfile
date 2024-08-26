@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 # RUN npm install -g tsc
-# RUN npm install -D vite
+RUN npm install -D vite
 COPY . .
 RUN vite build
 #EXPOSE 4173
